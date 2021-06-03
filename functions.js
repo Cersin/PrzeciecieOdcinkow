@@ -7,7 +7,7 @@ const punktA1 = document.getElementById('punktA1'),
     punktD1 = document.getElementById('punktD1'),
     punktD2 = document.getElementById('punktD2'),
     canvas = document.getElementById('canvas');
-    context = document.getElementById('canvas').getContext('2d'),
+    context = document.getElementById('canvas').getContext('2d');
     display = document.getElementById('results');
     canvasContainer = document.getElementById('canvas-container');
 
