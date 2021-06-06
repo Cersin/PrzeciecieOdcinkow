@@ -7,9 +7,9 @@ const punktA1 = document.getElementById('punktA1'),
     punktD1 = document.getElementById('punktD1'),
     punktD2 = document.getElementById('punktD2'),
     canvas = document.getElementById('canvas');
-    context = document.getElementById('canvas').getContext('2d');
-    display = document.getElementById('results');
-    canvasContainer = document.getElementById('canvas-container');
+context = document.getElementById('canvas').getContext('2d');
+display = document.getElementById('results');
+canvasContainer = document.getElementById('canvas-container');
 
 
 function iloczynWektorowy(X1, X2, Y1, Y2, Z1, Z2) {
@@ -53,6 +53,10 @@ function sprawdzPrzecinanie(A1, A2, B1, B2, C1, C2, D1, D2) {
 }
 
 function punktPrzeciecia(A1, A2, B1, B2, C1, C2, D1, D2) {
+    console.log(A1);
+    console.log(C1);
+    console.log(B1);
+    console.log(D1);
     let przeciecie = {
         x: null,
         y: null
@@ -64,24 +68,11 @@ function punktPrzeciecia(A1, A2, B1, B2, C1, C2, D1, D2) {
         return przeciecie;
     }
 
-    let a1;
-    if (B1 - A1 === 0) {
-        a1 = B2 - A2;
-    } else {
-        a1 = ((B2 - A2) / (B1 - A1));
-    }
-    let b1 = (A2 - (a1 * A1));
-
-    let a2;
-    if (D1 - C1 === 0) {
-        a2 = D2 - C2;
-    } else {
-        a2 = ((D2 - C2) / (D1 - C1));
-    }
-    let b2 = (C2 - (a2 * C1));
-
-    przeciecie.x = ((b1 - b2) / (a2 - a1));
-    przeciecie.y = (a2 * b1 - b2 * a1) / (a2 - a1);
+    // skrzyżowanie (prostej przez A,B) z (prostą przez C,D):
+    przeciecie.x = ((B1 - A1) * (D1 * C2 - D2 * C1) - (D1 - C1) * (B1 * A2 - B2 * A1)) / ((B2 - A2) * (D1 - C1) - (D2 - C2) * (B1 - A1));
+    przeciecie.y = ((D2 - C2) * (B1 * A2 - B2 * A1) - (B2 - A2) * (D1 * C2 - D2 * C1)) / ((D2 - C2) * (B1 - A1) - (B2 - A2) * (D1 - C1));
+    przeciecie.x = przeciecie.x.toFixed(1);
+    przeciecie.y = przeciecie.y.toFixed(1);
     return przeciecie;
 }
 
@@ -135,9 +126,9 @@ function aktualizuj() {
     }
 
     if (czyPrzeciete === 1) {
-        display.innerHTML = 'Proste przecinają się w punkcie:<br> x = ' + przeciecie.x.toFixed(1) + ', y = ' + przeciecie.y.toFixed(1);
+        display.innerHTML = 'Proste przecinają się w punkcie:<br> x = ' + przeciecie.x + ', y = ' + przeciecie.y;
     } else if (czyPrzeciete === 2) {
-        display.innerHTML = 'Proste stykają się w punkcie:<br> x = ' + przeciecie.x.toFixed(1) + ', y = ' + przeciecie.y.toFixed(1);
+        display.innerHTML = 'Proste stykają się w punkcie:<br> x = ' + przeciecie.x + ', y = ' + przeciecie.y;
     } else {
         display.innerHTML = 'Proste nie przecinają się, ani nie stykają'
     }
