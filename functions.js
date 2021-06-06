@@ -53,10 +53,6 @@ function sprawdzPrzecinanie(A1, A2, B1, B2, C1, C2, D1, D2) {
 }
 
 function punktPrzeciecia(A1, A2, B1, B2, C1, C2, D1, D2) {
-    console.log(A1);
-    console.log(C1);
-    console.log(B1);
-    console.log(D1);
     let przeciecie = {
         x: null,
         y: null
