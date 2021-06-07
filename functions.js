@@ -122,11 +122,11 @@ function aktualizuj() {
     }
 
     if (czyPrzeciete === 1) {
-        display.innerHTML = 'Proste przecinają się w punkcie:<br> x = ' + przeciecie.x + ', y = ' + przeciecie.y;
+        display.innerHTML = 'Odcinki przecinają się w punkcie:<br> x = ' + przeciecie.x + ', y = ' + przeciecie.y;
     } else if (czyPrzeciete === 2) {
-        display.innerHTML = 'Proste stykają się w punkcie:<br> x = ' + przeciecie.x + ', y = ' + przeciecie.y;
+        display.innerHTML = 'Odcinki stykają się w punkcie:<br> x = ' + przeciecie.x + ', y = ' + przeciecie.y;
     } else {
-        display.innerHTML = 'Proste nie przecinają się, ani nie stykają'
+        display.innerHTML = 'Odcinki nie przecinają się, ani nie stykają'
     }
 }
 
