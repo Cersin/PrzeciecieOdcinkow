@@ -57,8 +57,21 @@ function punktPrzeciecia(A1, A2, B1, B2, C1, C2, D1, D2) {
         x: null,
         y: null
     }
+    //
+
+    if (A1 === C1 && B1 === D1 && A2 === C2 && B2 === D2) {
+        przeciecie.x = "wielu wszystkie";
+        przeciecie.y = "wielu wszystkie";
+        return przeciecie;
+    }
 
     if (A1 === C1 && B1 === D1) {
+        przeciecie.x = "wielu";
+        przeciecie.y = "wielu";
+        return przeciecie;
+    }
+
+    if (A2 === C2 && B2 === D2) {
         przeciecie.x = "wielu";
         przeciecie.y = "wielu";
         return przeciecie;
