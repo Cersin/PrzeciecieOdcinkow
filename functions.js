@@ -92,6 +92,13 @@ function drawLine(line, color, text1, text2) {
 };
 
 function aktualizuj() {
+    if (isNaN(punktA1.value) || isNaN(punktA2.value)
+        || isNaN(punktB1.value) || isNaN(punktB2.value)
+        || isNaN(punktC1.value) || isNaN(punktC2.value)
+        || isNaN(punktD1.value) || isNaN(punktD2.value)) {
+        display.innerHTML = 'Dane źle wprowadzone, proszę użyć liczb oraz kropki, jeśli chcemy podać liczbę po przecinku';
+        return;
+    }
     const line1 = {
             startX: punktA1.value,
             startY: punktA2.value,
