@@ -27,10 +27,10 @@ function sprawdzKoniec(X1, X2, Y1, Y2, Z1, Z2) {
 }
 
 function sprawdzPrzecinanie(A1, A2, B1, B2, C1, C2, D1, D2) {
-    v1 = iloczynWektorowy(C1, C2, D1, D2, A1, A2); // C, D, A
-    v2 = iloczynWektorowy(C1, C2, D1, D2, B1, B2); // C, D, B
-    v3 = iloczynWektorowy(A1, A2, B1, B2, C1, C2); // A, B, C
-    v4 = iloczynWektorowy(A1, A2, B1, B2, D1, D2); // A, B, D
+    let v1 = iloczynWektorowy(C1, C2, D1, D2, A1, A2); // C, D, A
+    let v2 = iloczynWektorowy(C1, C2, D1, D2, B1, B2); // C, D, B
+    let v3 = iloczynWektorowy(A1, A2, B1, B2, C1, C2); // A, B, C
+    let v4 = iloczynWektorowy(A1, A2, B1, B2, D1, D2); // A, B, D
 
     if ((v1 > 0 && v2 < 0 || v1 < 0 && v2 > 0) && (v3 > 0 && v4 < 0 || v3 < 0 && v4 > 0)) {
         return 1;
@@ -92,6 +92,7 @@ function drawLine(line, color, text1, text2) {
 };
 
 function aktualizuj() {
+    // sprawdza, czy wprowadzone liczby są o typie number
     if (isNaN(punktA1.value) || isNaN(punktA2.value)
         || isNaN(punktB1.value) || isNaN(punktB2.value)
         || isNaN(punktC1.value) || isNaN(punktC2.value)
@@ -99,6 +100,8 @@ function aktualizuj() {
         display.innerHTML = 'Dane źle wprowadzone, proszę użyć liczb oraz kropki, jeśli chcemy podać liczbę po przecinku';
         return;
     }
+
+    // wyznacza wartości linii
     const line1 = {
             startX: punktA1.value,
             startY: punktA2.value,
@@ -112,22 +115,29 @@ function aktualizuj() {
             endY: punktD2.value
         };
 
+    // sprawdza przecinanie
     let czyPrzeciete = sprawdzPrzecinanie(line1.startX, line1.startY, line1.endX, line1.endY, line2.startX, line2.startY, line2.endX, line2.endY);
+
+    // definiuje punkt przeciecia
     let przeciecie = {
         x: null,
         y: null
     }
 
+    // rysuje odcinki
     context.clearRect(0, 0, 400, 300);
     canvas.width = canvasContainer.offsetWidth;
     canvas.height = canvasContainer.offsetHeight;
     drawLine(line1, '#be1b1b', "A", "B");
     drawLine(line2, '#1b72be', "C", "D");
+
+    // jesli przecina to rysuje punkt przeciecia
     if (czyPrzeciete === 1 || czyPrzeciete === 2) {
         przeciecie = punktPrzeciecia(line1.startX, line1.startY, line1.endX, line1.endY, line2.startX, line2.startY, line2.endX, line2.endY);
         drawPoint(przeciecie.x, przeciecie.y, 'green');
     }
 
+    // wyświetla tekst z przecięciem
     if (czyPrzeciete === 1) {
         display.innerHTML = 'Odcinki przecinają się w punkcie:<br> x = ' + przeciecie.x + ', y = ' + przeciecie.y;
     } else if (czyPrzeciete === 2) {
