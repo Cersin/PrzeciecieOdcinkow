@@ -63,31 +63,13 @@ function punktPrzeciecia(czyWspolrzedne, A1, A2, B1, B2, C1, C2, D1, D2) {
         y2: null
     }
 
-    if (czyWspolrzedne) {
-        if (A1 >= C1 ) {
-            przeciecie.x1 = A1;
-        } else przeciecie.x1 = C1;
-
-        if (A2 >= C2) {
-            przeciecie.x2 = A2;
-        } else przeciecie.x2 = C2;
-
-        if (B1 >= D1) {
-            przeciecie.y1 = B1;
-        } else przeciecie.y1 = D1;
-
-        if (B2 >= D2) {
-            przeciecie.y2 = B2;
-        } else przeciecie.y2 = D2;
-    }
-
     // skrzyżowanie (prostej przez A,B) z (prostą przez C,D):
-        przeciecie.x = ((B1 - A1) * (D1 * C2 - D2 * C1) - (D1 - C1) * (B1 * A2 - B2 * A1)) / ((B2 - A2) * (D1 - C1) - (D2 - C2) * (B1 - A1));
-        przeciecie.y = ((D2 - C2) * (B1 * A2 - B2 * A1) - (B2 - A2) * (D1 * C2 - D2 * C1)) / ((D2 - C2) * (B1 - A1) - (B2 - A2) * (D1 - C1));
-        przeciecie.x = przeciecie.x.toFixed(1);
-        przeciecie.y = przeciecie.y.toFixed(1);
+    przeciecie.x = ((B1 - A1) * (D1 * C2 - D2 * C1) - (D1 - C1) * (B1 * A2 - B2 * A1)) / ((B2 - A2) * (D1 - C1) - (D2 - C2) * (B1 - A1));
+    przeciecie.y = ((D2 - C2) * (B1 * A2 - B2 * A1) - (B2 - A2) * (D1 * C2 - D2 * C1)) / ((D2 - C2) * (B1 - A1) - (B2 - A2) * (D1 - C1));
+    przeciecie.x = przeciecie.x.toFixed(1);
+    przeciecie.y = przeciecie.y.toFixed(1);
 
-        return przeciecie;
+    return przeciecie;
 }
 
 
@@ -155,10 +137,10 @@ function aktualizuj() {
 
     // jesli przecina to rysuje punkt przeciecia
     if (czyPrzeciete === 1 || czyPrzeciete === 2) {
-        przeciecie = punktPrzeciecia(false, line1.startX, line1.startY, line1.endX, line1.endY, line2.startX, line2.startY, line2.endX, line2.endY);
+        przeciecie = punktPrzeciecia(line1.startX, line1.startY, line1.endX, line1.endY, line2.startX, line2.startY, line2.endX, line2.endY);
         drawPoint(przeciecie.x, przeciecie.y, 'green');
     } else if (czyPrzeciete === 3) {
-        przeciecie = punktPrzeciecia(true, line1.startX, line1.startY, line1.endX, line1.endY, line2.startX, line2.startY, line2.endX, line2.endY);
+        przeciecie = punktPrzeciecia(line1.startX, line1.startY, line1.endX, line1.endY, line2.startX, line2.startY, line2.endX, line2.endY);
     }
 
     // wyświetla tekst z przecięciem
@@ -167,7 +149,7 @@ function aktualizuj() {
     } else if (czyPrzeciete === 2) {
         display.innerHTML = 'Odcinki stykają się w punkcie :<br> x = ' + przeciecie.x + ', y = ' + przeciecie.y;
     } else if (czyPrzeciete === 3) {
-        display.innerHTML = 'Odcinki stykają się od :<br> x = (' + przeciecie.x1 + ',' + przeciecie.x2 + ') do y = (' + przeciecie.y1 + ',' + przeciecie.y2 + ')';
+        display.innerHTML = 'Odcinki nachodzą na siebie';
     } else {
         display.innerHTML = 'Odcinki nie przecinają się, ani nie stykają'
     }
