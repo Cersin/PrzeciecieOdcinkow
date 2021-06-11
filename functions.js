@@ -63,13 +63,60 @@ function punktPrzeciecia(czyWspolrzedne, A1, A2, B1, B2, C1, C2, D1, D2) {
         y2: null
     }
 
-    // skrzyżowanie (prostej przez A,B) z (prostą przez C,D):
-        przeciecie.x = ((B1 - A1) * (D1 * C2 - D2 * C1) - (D1 - C1) * (B1 * A2 - B2 * A1)) / ((B2 - A2) * (D1 - C1) - (D2 - C2) * (B1 - A1));
-        przeciecie.y = ((D2 - C2) * (B1 * A2 - B2 * A1) - (B2 - A2) * (D1 * C2 - D2 * C1)) / ((D2 - C2) * (B1 - A1) - (B2 - A2) * (D1 - C1));
-        przeciecie.x = przeciecie.x.toFixed(1);
-        przeciecie.y = przeciecie.y.toFixed(1);
+    // gdy są współliniowe
+    if (czyWspolrzedne) {
+        if (A1 === C1 && B1 === D1 && A2 === C2 && B2 === D2) {
+            przeciecie.x1 = A1;
+            przeciecie.x2 = A2;
+            przeciecie.y1 = B1;
+            przeciecie.y2 = B2;
+            return przeciecie;
+        }
 
-        return przeciecie;
+        // poziomo
+        if (A1 === C1 && B1 === D1) {
+            przeciecie.x1 = A1;
+            przeciecie.y1 = C1;
+            przeciecie.x2 = Math.max(A2, C2);
+            przeciecie.y2 = Math.min(B2, D2);
+
+            if (Number(A2) > Number(B2)) {
+                przeciecie.x2 = Math.min(A2, C2);
+                przeciecie.y2 = Math.max(B2, D2);
+            }
+
+            if (Number(B2) < Number(C2)) {
+                przeciecie.y2 = C2;
+            }
+        }
+
+        // pionowo
+        if (A2 === C2 && B2 === D2) {
+            przeciecie.x2 = A2;
+            przeciecie.y2 = C2;
+            przeciecie.x1 = Math.max(A1, C1);
+            przeciecie.y1 = Math.min(B1, D1);
+
+            if (Number(A1) > Number(B1)) {
+                przeciecie.x1 = Math.min(A1, C1);
+                przeciecie.y1 = Math.max(B1, D1);
+                if (Number(D1) >= Number(A1)) {
+                    przeciecie.y1 = A1;
+                }
+                if (Number(C1) <= Number(D1)) {
+                    przeciecie.x1 = D1;
+                }
+            }
+        }
+    }
+
+    // skrzyżowanie (prostej przez A,B) z (prostą przez C,D):
+    przeciecie.x = ((B1 - A1) * (D1 * C2 - D2 * C1) - (D1 - C1) * (B1 * A2 - B2 * A1)) / ((B2 - A2) * (D1 - C1) - (D2 - C2) * (B1 - A1));
+    przeciecie.y = ((D2 - C2) * (B1 * A2 - B2 * A1) - (B2 - A2) * (D1 * C2 - D2 * C1)) / ((D2 - C2) * (B1 - A1) - (B2 - A2) * (D1 - C1));
+    przeciecie.x = przeciecie.x.toFixed(1);
+    przeciecie.y = przeciecie.y.toFixed(1);
+    console.log(przeciecie);
+    return przeciecie;
 }
 
 
