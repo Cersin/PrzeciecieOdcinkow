@@ -1,3 +1,4 @@
+/*ustala główny font oraz resetuje margin, padding*/
 *,
 *::after,
 *::before {
@@ -8,6 +9,7 @@
     font-weight: 400;
 }
 
+/*ustala rozłożenie elementów w całej aplikacji*/
 html {
     box-sizing: border-box;
     /*1rem = 10px; 10px/16px = 62.5%*/

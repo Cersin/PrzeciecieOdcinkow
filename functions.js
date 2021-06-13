@@ -1,3 +1,4 @@
+// Pobiera punkty wprowadzone w HTML
 const punktA1 = document.getElementById('punktA1'),
     punktA2 = document.getElementById('punktA2'),
     punktB1 = document.getElementById('punktB1'),
@@ -7,11 +8,16 @@ const punktA1 = document.getElementById('punktA1'),
     punktD1 = document.getElementById('punktD1'),
     punktD2 = document.getElementById('punktD2'),
     canvas = document.getElementById('canvas');
+
+// Pobiera element canvas do obsługi intefejsu graficznego
 context = document.getElementById('canvas').getContext('2d');
-display = document.getElementById('results');
 canvasContainer = document.getElementById('canvas-container');
 
+// do wyświetlenia wyniku
+display = document.getElementById('results');
 
+
+// funkcja licząca iloczyn wektorowy
 function iloczynWektorowy(X1, X2, Y1, Y2, Z1, Z2) {
     const x1 = Z1 - X1;
     const y1 = Z2 - X2;
@@ -36,10 +42,10 @@ function sprawdzPrzecinanie(A1, A2, B1, B2, C1, C2, D1, D2) {
     let v3 = iloczynWektorowy(A1, A2, B1, B2, C1, C2); // A, B, C
     let v4 = iloczynWektorowy(A1, A2, B1, B2, D1, D2); // A, B, D
 
-    // sprawdza czy precinają się w punkcie
+    // sprawdza czy przecinają się w punkcie
     if ((v1 > 0 && v2 < 0 || v1 < 0 && v2 > 0) && (v3 > 0 && v4 < 0 || v3 < 0 && v4 > 0)) return 1;
 
-    // sprawdza czy odcinki stykają się w przedziale
+    // sprawdza czy odcinki stykają się w przedziale (są współliniowe)
     if (v1 === 0 && v2 === 0 && v3 === 0 && v4 === 0 && (sprawdzKoniec(C1, C2, D1, D2, A1, A2) || sprawdzKoniec(C1, C2, D1, D2, B1, B2) || sprawdzKoniec(A1, A2, B1, B2, C1, C2) || sprawdzKoniec(A1, A2, B1, B2, D1, D2)))
         return 3;
 
@@ -49,6 +55,7 @@ function sprawdzPrzecinanie(A1, A2, B1, B2, C1, C2, D1, D2) {
     if (v3 === 0 && sprawdzKoniec(A1, A2, B1, B2, C1, C2)) return 2;
     if (v4 === 0 && sprawdzKoniec(A1, A2, B1, B2, D1, D2)) return 2;
 
+    // jeśi żadne z powyższych nie zostały spełnione zwraca 0
     return 0;
 }
 
@@ -115,11 +122,11 @@ function punktPrzeciecia(czyWspolrzedne, A1, A2, B1, B2, C1, C2, D1, D2) {
     przeciecie.y = ((D2 - C2) * (B1 * A2 - B2 * A1) - (B2 - A2) * (D1 * C2 - D2 * C1)) / ((D2 - C2) * (B1 - A1) - (B2 - A2) * (D1 - C1));
     przeciecie.x = przeciecie.x.toFixed(1);
     przeciecie.y = przeciecie.y.toFixed(1);
-    console.log(przeciecie);
     return przeciecie;
 }
 
 
+// funkcja rysująca punkt
 function drawPoint(x, y, color) {
     context.fillStyle = color || 'black';
     context.beginPath();
@@ -127,6 +134,7 @@ function drawPoint(x, y, color) {
     context.fill();
 };
 
+// funkcja rysująca linie
 function drawLine(line, color, text1, text2) {
     color = color || 'black';
     context.strokeStyle = color;
@@ -138,6 +146,8 @@ function drawLine(line, color, text1, text2) {
     context.stroke();
 };
 
+
+// główna funkcja, która zostaje uruchomiona przy każdej zmianie punktów
 function aktualizuj() {
     // sprawdza, czy wprowadzone liczby są o typie number
     if (isNaN(punktA1.value) || isNaN(punktA2.value)
@@ -148,7 +158,7 @@ function aktualizuj() {
         return;
     }
 
-    // wyznacza wartości linii
+    // definiuje linie
     const line1 = {
             startX: punktA1.value,
             startY: punktA2.value,
@@ -190,7 +200,7 @@ function aktualizuj() {
         przeciecie = punktPrzeciecia(true, line1.startX, line1.startY, line1.endX, line1.endY, line2.startX, line2.startY, line2.endX, line2.endY);
     }
 
-    // wyświetla tekst z przecięciem
+    // wyświetla z tekst z informacją o wyniku programu
     if (czyPrzeciete === 1) {
         display.innerHTML = 'Odcinki przecinają się w punkcie:<br> x = ' + przeciecie.x + ', y = ' + przeciecie.y;
     } else if (czyPrzeciete === 2) {
@@ -202,8 +212,10 @@ function aktualizuj() {
     }
 }
 
+// pierwsze uruchomienie funkcji przy starcie programu
 aktualizuj();
 
+// nasłuchuje na zmiany w punktach i wykonuje funkcje aktualizuj
 punktA1.onchange = aktualizuj;
 punktA2.onchange = aktualizuj;
 punktB1.onchange = aktualizuj;
